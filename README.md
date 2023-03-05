@@ -72,7 +72,7 @@ This page will be served for the below errors:
 
 ### Custom 5xx errors
 
-Currently, not supported. If this is required, please open an issue.
+Currently not supported. If this is required, please open an issue.
 
 ### What ports does the container listen on
 
