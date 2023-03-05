@@ -63,7 +63,7 @@ be available at `http://<>/site/index.html`
 
 ### Custom 404 page
 
-To make use of your own custom 404 page, ensure that in the root of your bucket, exists a file called `404.html`
+To make use of your own custom 404 page, place a `404.html` file in the root of the bucket/ 
 
 This page will be served for the below errors:
 
