@@ -16,7 +16,7 @@
         * [GitHub Actions](#github-actions)
 <!-- TOC -->
 
-This page is designed to help you get up and running quickly 
+This page is designed to help you get up and running quickly.
 
 If you are familiar with [Terraform](https://terraform.io) and [Kubernetes](https://kubernetes.io) and want to skip the 
 full instructions, the `TL;DR` is:
@@ -54,7 +54,7 @@ As mentioned in the main [README](../README.md#what-you-need-pre-existing) - You
 6. Run `terraform plan`
 7. If all looks okay, run `terraform apply`
 
-Copy and paste the email address that is printed. We need this for the Kubernetes step
+Copy and paste the email address that is printed. We need this for the Kubernetes step.
 
 ## Kubernetes
 
