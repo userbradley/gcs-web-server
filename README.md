@@ -21,7 +21,7 @@ This is a simple docker container that allows you to connect a GCS bucket to it,
 
 ## Quick start
 
-Have a look at  
+See the [Quick Start](example/README.md) with supplied Terraform and Kubernetes Manifests 
 
 ## What you need pre-existing
 
