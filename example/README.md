@@ -93,21 +93,21 @@ Use `gcsfuse` in a session on the pod and mount it to temp with debug, and try o
 gcsfuse --foreground --debug_fuse --debug_fs --debug_gcs --debug_http  --implicit-dirs -o allow_other gcs-website /tmp/dir
 ```
 
-Then navigate to `/tmp/dir` in another session and try open a file
+Then navigate to `/tmp/dir` in another session and try open a file.
 
 ### Page loads blank
 
-Ensure that objects copied to the bucket aren't being `gzipped` on the way
+Ensure that objects copied to the bucket aren't being `gzipped` on the way.
 
 #### How to check
 
-Navigate to the GCS bucket where the pages are stored
+Navigate to the GCS bucket where the pages are stored.
 
-Click on the 3 dots on the far right hand side
+Click on the 3 dots on the far right hand side.
 
 Click `Edit Metadata`
 
-If you see `Content-Encoding` set to anything but blank (See example below) - Then it won't load
+If you see `Content-Encoding` set to anything but blank (See example below) - Then it won't load.
 
 ![Content Encoding](../assets/content-encoding.png)
 
