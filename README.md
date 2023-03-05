@@ -17,7 +17,7 @@
 <!-- TOC -->
 
 
-This is a simple docker container that allows you to connect a GCS bucket to it, and server it via nginx
+This is a simple docker container that allows you to connect to a GCS bucket and serve webpages from it, in Kubernetes. 
 
 ## Quick start
 
