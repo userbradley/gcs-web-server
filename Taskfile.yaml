@@ -1,0 +1,10 @@
+version: 3
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list-all
+  docker-build:
+    silent: true
+    cmds:
+      - docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t userbradley/gcs-web-server:latest --push .

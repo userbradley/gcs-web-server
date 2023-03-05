@@ -4,6 +4,126 @@
 * [GCS Web server](#gcs-web-server)
 <!-- TOC -->
 
-## What is this
 
-This is a docker container that mounts a GCS bucket, and serves it from a web page.
+This is a simple docker container that allows you to connect a GCS bucket to it, and server it via nginx
+
+## Quick start
+
+Have a look at  
+
+## What you need pre-existing
+
+* GKE Cluster
+* Workload Identity Enabled
+* Kubernetes Service account connected to GSA
+* GCS Bucket
+
+### What if I don't want to use Workload Identity
+
+> **error*
+> You should really consider using workload identity
+> 
+> [Learn more here](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#:~:text=Workload%20Identity%20allows%20workloads%20in,to%20access%20Google%20Cloud%20services.)
+
+
+[plutov/gcs-k8f-deployment-full.yml](https://gist.github.com/plutov/34d904edaa07d57bc0c1b84bc42114e4#file-gcs-k8f-deployment-full-yml)
+
+## Useful information
+
+### Where the content should go
+
+`/var/www/site/`
+
+### What health check endpoints exist?
+
+| Name of endpoint | Response code | Example response        |
+|------------------|---------------|-------------------------|
+| `/healthz`       | `http/200`    | `{"status":"UP"}`       |
+| `/health`        | `http/200`    | `{"status":"UP"}`       |
+
+> **Note**
+> These endpoints do not generate logs, to save costs.
+
+### Custom 404 page
+
+To make use of your own custom 404 page, ensure that in the root of your bucket, exists a file called `404.html`
+
+This page will be served for the below errors:
+
+* 404
+* 403
+
+### Custom 5xx errors
+
+Currently, not supported. If this is required, please open an issue.
+
+### What ports does the container listen on
+
+| IP Stack version | IP address | Port |
+|------------------|------------|------|
+| `v6`             | `[::]`     | `80` |
+| `v4`             | `0.0.0.0`  | `80` |
+
+### Where are the docker images
+
+* [userbradley/gcs-web-server](https://hub.docker.com/r/userbradley/gcs-web-server)
+* _Google Artifact Registry coming soon! - Open an issue if this would benefit you!_
+
+### Building the image locally
+
+```shell
+docker build -t gcs-web-server:latest .
+```
+
+## Example manifest
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gcs-website
+spec:
+  replicas: 2
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gcs-website
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gcs-website
+    spec:
+      volumes:
+        - name: gcs
+          emptyDir: {}
+      serviceAccountName: gcs-website
+      containers:
+        - name: gcs-website
+          image: "userbradley/gcs-web-server"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - SYS_ADMIN
+          volumeMounts:
+            - mountPath: /var/www/site
+              name: gcs
+          lifecycle:
+            postStart:
+              exec:
+                command: [ "gcsfuse","--implicit-dirs", "-o", "allow_other", "gcs-bucket-name", "/var/www/site" ]
+            preStop:
+              exec:
+                command: [ "fusermount", "-u", "/var/www/site/" ]
+```
