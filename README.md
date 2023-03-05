@@ -44,7 +44,12 @@ See the [Quick Start](example/README.md) with supplied Terraform and Kubernetes 
 
 ### Where the content should go
 
-`/var/www/site/`
+Upload what ever static site you want in to the root of the bucket.
+
+All pages will get rendered when you hit the link.
+
+The server supports sub-pages, so if you are uploading everything in go `gs://gcs-webstite/site/index.html` - Your page will 
+be available at `http://<>/site/index.html`
 
 ### What health check endpoints exist?
 
