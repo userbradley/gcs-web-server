@@ -67,8 +67,8 @@ To make use of your own custom 404 page, ensure that in the root of your bucket,
 
 This page will be served for the below errors:
 
-* 404
-* 403
+* [404](https://http.cat/404)
+* [403](https://http.cat/403)
 
 ### Custom 5xx errors
 
