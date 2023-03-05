@@ -32,7 +32,7 @@ See the [Quick Start](example/README.md) with supplied Terraform and Kubernetes 
 
 ### What if I don't want to use Workload Identity
 
-> **error**
+> **warning**
 > You should really consider using workload identity
 > 
 > [Learn more here](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#:~:text=Workload%20Identity%20allows%20workloads%20in,to%20access%20Google%20Cloud%20services.)
