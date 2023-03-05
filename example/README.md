@@ -68,7 +68,7 @@ You will need to have already logged in and authenticate to your GKE cluster.
 
 ## Troubleshooting issues
 
-A good port of call for any whack issues, is to check the GCS Fuse documentaiton.
+A good port of call for any whack issues, is to check the GCS Fuse documentation.
 
 Useful pages are below
 
