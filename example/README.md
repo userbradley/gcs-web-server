@@ -125,4 +125,3 @@ If you see `Content-Encoding` set to anything but blank (See example below) - Th
           parent: false
           gzip: false
 ```
-
