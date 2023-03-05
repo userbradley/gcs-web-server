@@ -2,6 +2,18 @@
 
 <!-- TOC -->
 * [GCS Web server](#gcs-web-server)
+  * [Quick start](#quick-start)
+  * [What you need pre-existing](#what-you-need-pre-existing)
+    * [What if I don't want to use Workload Identity](#what-if-i-dont-want-to-use-workload-identity)
+  * [Useful information](#useful-information)
+    * [Where the content should go](#where-the-content-should-go)
+    * [What health check endpoints exist?](#what-health-check-endpoints-exist)
+    * [Custom 404 page](#custom-404-page)
+    * [Custom 5xx errors](#custom-5xx-errors)
+    * [What ports does the container listen on](#what-ports-does-the-container-listen-on)
+    * [Where are the docker images](#where-are-the-docker-images)
+    * [Building the image locally](#building-the-image-locally)
+  * [Example manifest](#example-manifest)
 <!-- TOC -->
 
 

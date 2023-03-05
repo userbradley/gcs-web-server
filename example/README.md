@@ -1,5 +1,21 @@
 # GCS Webserver Quick Start
 
+
+<!-- TOC -->
+* [GCS Webserver Quick Start](#gcs-webserver-quick-start)
+  * [Assumptions made](#assumptions-made)
+  * [Things we do not set up](#things-we-do-not-set-up)
+  * [Terraform](#terraform)
+  * [Kubernetes](#kubernetes)
+  * [Troubleshooting issues](#troubleshooting-issues)
+    * [Pod won't start](#pod-wont-start)
+    * [404 errors, or objects not found](#404-errors-or-objects-not-found)
+    * [Page loads blank](#page-loads-blank)
+      * [How to check](#how-to-check)
+      * [How to fix this](#how-to-fix-this)
+        * [GitHub Actions](#github-actions)
+<!-- TOC -->
+
 This page is designed to help you get up and running quickly 
 
 If you are familiar with [Terraform](https://terraform.io) and [Kubernetes](https://kubernetes.io) and want to skip the 
