@@ -1,0 +1,57 @@
+name: Build Image for GCP
+
+env:
+  CONTAINER: "gcs-web-server"
+  REPO: "public"
+
+  ## VARS you won't have to change
+  AR: "europe-west2-docker.pkg.dev/breadnet-container-store"
+
+on:
+  push:
+    branches:
+      - main
+      - writing-code
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: 'projects/155476547905/locations/global/workloadIdentityPools/breadnet-cicd/providers/github-actions'
+          service_account: 'gcs-web-server@breadnet-cicd.iam.gserviceaccount.com'
+
+      - uses: 'docker/login-action@v2'
+        name: Log docker in to Google Container Store
+        with:
+          registry: 'europe-west2-docker.pkg.dev'
+          username: 'oauth2accesstoken'
+          password: '${{ steps.auth.outputs.access_token }}'
+
+      - name: Generate Docker container tags
+        id: docker
+        run:
+         - echo "sha=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+         - echo ref=$(echo ${GITHUB_REF_NAME} | cut -f2 -d'/') >> $GITHUB_OUTPUT
+
+      - name: Build and Push image
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          context: ${{ env.DIR }}
+          file: Dockerfile
+          tags: |
+            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.docker.outputs.sha}}
+            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.docker.outputs.ref}}
+            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.docker.outputs.ref}}-${{steps.docker.outputs.sha}}
+            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:latest
