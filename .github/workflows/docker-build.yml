@@ -62,8 +62,14 @@ jobs:
           context: ${{ env.DIR }}
           file: ${{ env.DIR }}/Dockerfile
           tags: |
+            # GAR
             ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.sha.outputs.sha}}
             ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}
             ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}}
             ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:latest
+            # GHCR
+            ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.sha.outputs.sha}}
+            ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}
+            ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}}
+            ghcr.io/userbradley/${{ env.CONTAINER}}:latest
             ghcr.io/userbradley/${{ env.CONTAINER}}:latest
