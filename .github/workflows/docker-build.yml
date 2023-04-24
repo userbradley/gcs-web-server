@@ -19,6 +19,8 @@ jobs:
     permissions:
       id-token: write
       contents: read
+      packages: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -37,6 +39,13 @@ jobs:
           registry: 'europe-west2-docker.pkg.dev'
           username: 'oauth2accesstoken'
           password: '${{ steps.auth.outputs.access_token }}'
+
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v1
+        with:
+          registry: 'ghcr.io'
+          username: '${{github.actor}}'
+          password: '${{secrets.GITHUB_TOKEN}}'
 
       - name: Generate Shortened SHA Hash for docker container
         id: sha
@@ -57,3 +66,4 @@ jobs:
             ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}
             ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}}
             ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:latest
+            ghcr.io/userbradley/${{ env.CONTAINER}}:latest
