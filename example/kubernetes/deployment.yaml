@@ -20,7 +20,7 @@ spec:
       serviceAccountName: gcs-website
       containers:
         - name: gcs-website
-          image: "userbradley/gcs-web-server"
+          image: europe-west2-docker.pkg.dev/breadnet-container-store/public/gcs-web-server
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80

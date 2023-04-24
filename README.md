@@ -38,8 +38,6 @@ See the [Quick Start](example/README.md) with supplied Terraform and Kubernetes 
 > [Learn more here](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#:~:text=Workload%20Identity%20allows%20workloads%20in,to%20access%20Google%20Cloud%20services.)
 
 
-[plutov/gcs-k8f-deployment-full.yml](https://gist.github.com/plutov/34d904edaa07d57bc0c1b84bc42114e4#file-gcs-k8f-deployment-full-yml)
-
 ## Useful information
 
 ### Where the content should go
@@ -81,10 +79,10 @@ Currently not supported. If this is required please open an issue.
 | `v6`             | `[::]`     | `80` |
 | `v4`             | `0.0.0.0`  | `80` |
 
-### Where are the docker images
+### Where is the docker image
 
-* [userbradley/gcs-web-server](https://hub.docker.com/r/userbradley/gcs-web-server)
-* _Google Artifact Registry coming soon! - Open an issue if this would benefit you!_
+* [GitHub Container Registry](https://github.com/userbradley/gcs-web-server/pkgs/container/gcs-web-server)
+* [Google Artifact Registry](https://console.cloud.google.com/artifacts/docker/breadnet-container-store/europe-west2/public/gcs-web-server)
 
 ### Building the image locally
 
@@ -117,7 +115,7 @@ spec:
       serviceAccountName: gcs-website
       containers:
         - name: gcs-website
-          image: "userbradley/gcs-web-server"
+          image: europe-west2-docker.pkg.dev/breadnet-container-store/public/gcs-web-server
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
