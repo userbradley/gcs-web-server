@@ -10,6 +10,11 @@ LABEL maintainer="bradley@breadnet.co.uk"
 LABEL description="gcs-web-server"
 LABEL vcs-url="https://github.com/userbradley/gcs-web-server"
 
+LABEL org.opencontainers.image.source="https://github.com/userbradley/gcs-web-server"
+LABEL org.opencontainers.image.description="Container that allows you to mount a GCS Bucket and serve it via nginx"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.base.name="index.docker.io/nginx:stable-alpine"
+
 COPY --from=gcsfuse /go/bin/gcsfuse /usr/local/bin
 
 RUN apk add --no-cache ca-certificates fuse
