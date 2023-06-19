@@ -1,10 +1,10 @@
-FROM golang:1.18.5-alpine AS gcsfuse
+FROM golang:1.20.5-alpine3.18 AS gcsfuse
 RUN apk add --no-cache git
 ENV GOPATH="/go"
 ENV GO111MODULE="auto"
-RUN go get -u github.com/googlecloudplatform/gcsfuse
+RUN go install github.com/googlecloudplatform/gcsfuse@master
 
-FROM nginx:stable-alpine
+FROM nginx:stable-alpine3.17-slim
 
 LABEL maintainer="bradley@breadnet.co.uk"
 LABEL description="gcs-web-server"
@@ -13,7 +13,7 @@ LABEL vcs-url="https://github.com/userbradley/gcs-web-server"
 LABEL org.opencontainers.image.source="https://github.com/userbradley/gcs-web-server"
 LABEL org.opencontainers.image.description="Container that allows you to mount a GCS Bucket and serve it via nginx"
 LABEL org.opencontainers.image.licenses="MIT"
-LABEL org.opencontainers.image.base.name="index.docker.io/nginx:stable-alpine"
+LABEL org.opencontainers.image.base.name="index.docker.io/nginx:stable-alpine3.17-slim"
 
 COPY --from=gcsfuse /go/bin/gcsfuse /usr/local/bin
 
