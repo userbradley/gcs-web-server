@@ -5,7 +5,9 @@
   * [Quick start](#quick-start)
   * [What you need pre-existing](#what-you-need-pre-existing)
     * [GKE Cluster](#gke-cluster)
+    * [GKE Project with Oauth Consent Screen](#gke-project-with-oauth-consent-screen)
     * [Service project](#service-project)
+    * [Secrets project](#secrets-project)
   * [Useful information](#useful-information)
     * [Where the content should go](#where-the-content-should-go)
     * [What health check endpoints exist?](#what-health-check-endpoints-exist)
@@ -65,7 +67,6 @@ Do not prepend `{env}` to this, as the Module will create buckets and service ac
 A secrets project is required as the module creates secrets with the IAP oauth credentials (If enabled)
 
 You can set this to any project that has the `secrets` api enabled
-
 
 
 ## Useful information
