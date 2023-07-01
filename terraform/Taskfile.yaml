@@ -1,0 +1,14 @@
+version: '3'
+
+
+tasks:
+  default:
+    desc: Lists all available tasks
+    cmds:
+      - task --list-all
+    silent: true
+  readme:
+    desc: Generates the README file
+    silent: true
+    cmds:
+      - terraform-docs md . > README.md

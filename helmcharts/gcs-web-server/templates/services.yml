@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "gcs-web-server.name" .}}
+  annotations:
+    beta.cloud.google.com/backend-config: '{"default": {{ include "gcs-web-server.name" . | quote }}}'
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: {{ .Values.application.listenPort }}
+  selector:
+    {{- include "gcs-web-server.selectorLabels" . | nindent 4 }}
+  type: ClusterIP

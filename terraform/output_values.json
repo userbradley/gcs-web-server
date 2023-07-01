@@ -1,0 +1,32 @@
+{
+  "gcp_secret_iap_client_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "{env}-{deployment_name}-iap-client-id"
+  },
+  "gcp_secret_iap_client_secret": {
+    "sensitive": false,
+    "type": "string",
+    "value": "{env}-{deployment_name}-iap-client-secret"
+  },
+  "iap_client_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "redacted.apps.googleusercontent.com"
+  },
+  "iap_client_secret": {
+    "sensitive": true,
+    "type": "string",
+    "value": "redacted"
+  },
+  "ip_address": {
+    "sensitive": false,
+    "type": "string",
+    "value": "198.51.100.69"
+  },
+  "ip_address_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "{deployment_name}-{env}"
+  }
+}

@@ -1,0 +1,47 @@
+# -- Environment name
+env: "dev"
+
+
+application:
+  # -- Port the GCS Web server listens on
+  listenPort: 80
+  # -- Health Check endpoint for Web Server
+  healthCheckEndpoint: "/healthz"
+
+scaling:
+  # -- How many replicas to run
+  replicas: 3
+
+image:
+  # -- Tag of the image to pull from [breadNET Public Google Artifact Registry](https://console.cloud.google.com/artifacts/docker/breadnet-container-store/europe-west2/public/gcs-web-server)
+  tag: "4946052"
+  # -- Pull policy. Should be left as `Always`
+  pullPolicy: Always
+
+ingress:
+  # -- Domain name the GCP Load balancer will provision an SSL cert to.
+  # If `env` is anything but `prd` this will append the `env`
+  domain: "gcs-web-server.breadnet.co.uk"
+  # -- Name of the IP address in GCP. Will append `env` to the end
+  ipName: gcs-web-server
+  iap:
+    # -- Whether to enable IAP on the site
+    enabled: true
+    # -- IAP Client ID
+    clientId: "placeholder"
+    # -- IAP Client Secret
+    clientSecret: "placeholder"
+
+googleCloud:
+  # -- Service account is in the format of {service-account-name}-{env}@{project}.iam.gserviceaccount.com
+  serviceAccount: gcs-web-server
+  # -- Project name does not have any env magic on it. Assumes everything is under one project
+  project: gcs-web-server
+  # -- Bucket is in the format of {bucket-name}-{env}
+  bucketName: gcs-web-server
+
+  logging:
+    # -- Should logging be enabled
+    enabled: false
+    # -- What percentage of the logs should be stored and indexed in GCP
+    sampleRate: "0.1"

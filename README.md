@@ -4,45 +4,111 @@
 * [GCS Web server](#gcs-web-server)
   * [Quick start](#quick-start)
   * [What you need pre-existing](#what-you-need-pre-existing)
-    * [What if I don't want to use Workload Identity](#what-if-i-dont-want-to-use-workload-identity)
+    * [GKE Cluster](#gke-cluster)
+    * [GKE Project with Oauth Consent Screen](#gke-project-with-oauth-consent-screen)
+    * [Service project](#service-project)
+    * [Secrets project](#secrets-project)
   * [Useful information](#useful-information)
     * [Where the content should go](#where-the-content-should-go)
     * [What health check endpoints exist?](#what-health-check-endpoints-exist)
     * [Custom 404 page](#custom-404-page)
     * [Custom 5xx errors](#custom-5xx-errors)
     * [What ports does the container listen on](#what-ports-does-the-container-listen-on)
-    * [Where are the docker images](#where-are-the-docker-images)
-    * [Building the image locally](#building-the-image-locally)
-  * [Example manifest](#example-manifest)
+    * [Where is the docker image](#where-is-the-docker-image)
 <!-- TOC -->
 
 
-This is a simple docker container that allows you to connect to a GCS bucket and serve webpages from it, in Kubernetes. 
+Opinionated infrastructure and supporting materials to host a website from a GCS Bucket on GKE
+
+## Why?
+
+GCP does not allow us to put IAP on a backend bucket, and I run several GKE clusters so this seems like a pretty simple solution
+
+
 
 ## Quick start
 
-See the [Quick Start](example/README.md) with supplied Terraform and Kubernetes Manifests 
+See the [Full example repository](https://github.com/userbradley/gcs-web-server-example) where minimal input is required from your self
+to get up and running
+
+Any issues, check the [Troubleshooting Page](troubleshooting.md)
+
+## What is required
+
+* Terraform installed locally
+* Helm installed locally
+
+## Terraform specifics
+
+### What terraform resources are created
+
+See the [Resources](terraform/README.md#resources) section
+
+**Q:** Why are we creating a secret?
+
+**A:** The secrets are created so that if you need to allow other team members to upgrade the helm chart, they are able to pull
+the secrets from your central secret manager
+
+### Helm specifics
+
+You will need to create a DNS record pointing to the IP address created by the module.
+
+**Q:** What values can I set in the helm chart?
+
+**A:** see [helmcharts/gcs-web-server/values.yaml](helmcharts/gcs-web-server/values.yaml)
+
+
 
 ## What you need pre-existing
 
-* GKE Cluster
-* Workload Identity Enabled
-* Kubernetes Service account connected to GSA
-* GCS Bucket
+* GKE Cluster with Workload Identity enabled
+* GKE Project with IAP Oauth Consent screen created
+* _service project_ where the buckets and service accounts can be created
+* Secrets project
 
-### What if I don't want to use Workload Identity
+These requirements will be explained in detail below
 
-> **Warning**
-> You should really consider using workload identity
-> 
-> [Learn more here](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#:~:text=Workload%20Identity%20allows%20workloads%20in,to%20access%20Google%20Cloud%20services.)
+### GKE Cluster
+
+See [Allow Pods to authenticate to Google CLoud APIs using Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity) on how to enable Workload Identity on your cluster
+
+### GKE Project with Oauth Consent Screen
+
+This is required for IAP
+
+Navigate to [**APIs & Services** > **OAuth consent screen**](https://console.cloud.google.com/apis/credentials/consent)
+
+### Service project
+
+A service project is required to store the below items in
+
+* Service accounts
+* GCS Buckets
+* Workload Identity Bindings
+
+We do not create these in the GKE project, as it's best practice to keep a deployment per project.
+
+You should create the project in the format of:
+
+```shell
+<company-name>-<name-of-site>
+```
+
+Do not prepend `{env}` to this, as the Module will create buckets and service accounts for all environments (if you chose to create multiple) in the same project
 
 
-## Useful information
+### Secrets project
+
+A secrets project is required as the module creates secrets with the IAP oauth credentials (If enabled)
+
+You can set this to any project that has the `secrets` api enabled
+
+
+## Useful information about the container
 
 ### Where the content should go
 
-Upload what ever static site you want in to the root of the bucket.
+Upload what ever static site you want in to the root of the bucket. It will render `html`, `css` and `javascript`
 
 All pages will get rendered when you hit the link.
 
@@ -84,61 +150,30 @@ Currently not supported. If this is required please open an issue.
 * [GitHub Container Registry](https://github.com/userbradley/gcs-web-server/pkgs/container/gcs-web-server)
 * [Google Artifact Registry](https://console.cloud.google.com/artifacts/docker/breadnet-container-store/europe-west2/public/gcs-web-server)
 
-### Building the image locally
+## FAQ
 
-```shell
-docker build -t gcs-web-server:latest .
-```
+### What CLI tools do I need installed
 
-## Example manifest
+* Helm
+* Terraform
 
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: gcs-website
-spec:
-  replicas: 2
-  strategy:
-    type: Recreate
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: gcs-website
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: gcs-website
-    spec:
-      volumes:
-        - name: gcs
-          emptyDir: {}
-      serviceAccountName: gcs-website
-      containers:
-        - name: gcs-website
-          image: europe-west2-docker.pkg.dev/breadnet-container-store/public/gcs-web-server
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 80
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          securityContext:
-            privileged: true
-            capabilities:
-              add:
-                - SYS_ADMIN
-          volumeMounts:
-            - mountPath: /var/www/site
-              name: gcs
-          lifecycle:
-            postStart:
-              exec:
-                command: [ "gcsfuse","--implicit-dirs", "-o", "allow_other", "gcs-bucket-name", "/var/www/site" ]
-            preStop:
-              exec:
-                command: [ "fusermount", "-u", "/var/www/site/" ]
-```
+Optionally: `skaffold`
+
+###  Why do you create a secret
+
+A secret is created by default (eg: you cant turn it off) so that if other members of the team need access to upgrade the helm chart,
+they have the secrets locally.
+
+[See how to print latest secret](https://documentation.breadnet.co.uk/cloud/gcp/print-secret-gcloud/)
+
+
+### How do I create Multiple environments?
+
+To create multiple environments, simply copy and paste the entire module, and change the `env` to one of `dev`, `test`, or `prod`
+
+### Why only `dev` test and `prod`
+
+Limitation in the helm chart that I have not fixed yet
+
+[Open GitHub issue](https://github.com/userbradley/gcs-web-server/issues/6)
+

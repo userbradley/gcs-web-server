@@ -1,0 +1,7 @@
+IP name: {{include "IpAddress.name" . }}
+
+URL: https://{{ include "ingress.domain" . }}
+
+Environment: {{.Values.env }}
+
+Any issues with the helm chart or if you need support, open an issue: https://github.com/userbradley/gcs-web-server/issues/new
