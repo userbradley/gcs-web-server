@@ -1,0 +1,19 @@
+version: 3
+
+tasks:
+
+  default:
+    desc: Lists all the commands one can use
+    silent: true
+    cmds:
+      - task --list-all
+  lint:
+    desc: Lints the Helm chart
+    cmds:
+      - cmd: helm lint .
+        silent: true
+  docs:
+    silent: true
+    desc: Generates Documentation
+    cmds:
+      - helm-docs

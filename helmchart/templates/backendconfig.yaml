@@ -1,0 +1,24 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: {{ include "gcs-web-server.name" . }}
+spec:
+  {{- if .Values.ingress.iap.enabled}}
+  iap:
+    enabled: true
+    oauthclientCredentials:
+      secretName: iap-oauth-client-id
+  {{- end }}
+  {{- if .Values.googleCloud.logging.enabled}}
+  logging:
+    enable: true
+    sampleRate: {{.Values.googleCloud.logging.sampleRate}}
+  {{- end }}
+  healthCheck:
+    checkIntervalSec: 10
+    timeoutSec: 3
+    healthyThreshold: 2
+    unhealthyThreshold: 2
+    type: HTTP
+    requestPath: {{.Values.application.healthCheckEndpoint}}
+    port: {{.Values.application.listenPort }}

@@ -1,0 +1,10 @@
+{{if .Values.ingress.iap.enabled}}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: iap-oauth-client-id
+data:
+  client_id: {{ .Values.ingress.iap.clientId | b64enc }}
+  client_secret: {{ .Values.ingress.iap.clientSecret | b64enc }}
+type: Opaque
+  {{- end }}

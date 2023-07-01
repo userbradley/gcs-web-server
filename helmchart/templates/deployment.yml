@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "gcs-web-server.name" . }}
+spec:
+  replicas: {{ .Values.scaling.replicas}}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+    {{- include "gcs-web-server.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+    {{- include "gcs-web-server.selectorLabels" . | nindent 8 }}
+    spec:
+      volumes:
+        - name: gcs
+          emptyDir: {}
+      serviceAccountName: {{ include "gcs-web-server.name" . }}
+      containers:
+        - name: {{ include "gcs-web-server.name" .}}
+          image: "europe-west2-docker.pkg.dev/breadnet-container-store/public/gcs-web-server:{{.Values.image.tag}}"
+          imagePullPolicy: {{.Values.image.pullPolicy}}
+          ports:
+            - containerPort: {{.Values.application.listenPort}}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: {{.Values.application.healthCheckEndpoint}}
+              port: {{.Values.application.listenPort}}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - SYS_ADMIN
+          volumeMounts:
+            - mountPath: /var/www/site
+              name: gcs
+          lifecycle:
+            postStart:
+              exec:
+                command: [ "gcsfuse","--implicit-dirs", "-o", "allow_other", "{{ include "bucket.name" .}}", "/var/www/site" ]
+            preStop:
+              exec:
+                command: [ "fusermount", "-u", "/var/www/site/" ]

@@ -1,0 +1,7 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: {{ include "gcs-web-server.name" . }}
+spec:
+  domains:
+    - {{ include "ingress.domain" . }}
