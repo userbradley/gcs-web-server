@@ -33,10 +33,3 @@ variable "iap_enabled" {
   type        = bool
   description = "Should IAP Credentials be generated"
 }
-
-
-variable "namespace" {
-  type        = string
-  description = "Name of the GKE Namespace this will be deployed in to"
-}
-
