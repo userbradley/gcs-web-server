@@ -30,3 +30,12 @@ output "gcp_secret_iap_client_id" {
   value       = module.gcs-web-server.gcp_secret_iap_client_id
   description = "Name of the Secret created with the IAP Client ID"
 }
+
+output "ip_address" {
+  value = module.gcs-web-server.ip_address
+  description = "IP address of the IP address"
+}
+
+output "ip_address_name" {
+  value = module.gcs-web-server.ip_address_name
+}

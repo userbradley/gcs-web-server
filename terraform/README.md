@@ -25,6 +25,8 @@
 | <a name="output_gcp_secret_iap_client_secret"></a> [gcp\_secret\_iap\_client\_secret](#output\_gcp\_secret\_iap\_client\_secret) | Name of the Secret created with the IAP Secret | `"{env}-{deployment_name}-iap-client-secret"` | no |
 | <a name="output_iap_client_id"></a> [iap\_client\_id](#output\_iap\_client\_id) | IAP Client ID | `"redacted.apps.googleusercontent.com"` | no |
 | <a name="output_iap_client_secret"></a> [iap\_client\_secret](#output\_iap\_client\_secret) | IAP Client secret | `<sensitive>` | yes |
+| <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | IP address of the IP Address | `"198.51.100.69"` | no |
+| <a name="output_ip_address_name"></a> [ip\_address\_name](#output\_ip\_address\_name) | Name of the IP Address | `"{deployment_name}-{env}"` | no |
 
 
 ---

@@ -22,3 +22,13 @@ output "gcp_secret_iap_client_id" {
   value       = join("",google_secret_manager_secret.iap_client_id[*].secret_id)
   description = "Name of the Secret created with the IAP Client ID"
 }
+
+output "ip_address_name" {
+  value = google_compute_global_address.ip.name
+  description = "Name of the IP Address"
+}
+
+output "ip_address" {
+  value = google_compute_global_address.ip.address
+  description = "IP address of the IP Address" // Go figure
+}

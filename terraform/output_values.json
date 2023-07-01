@@ -18,5 +18,15 @@
     "sensitive": true,
     "type": "string",
     "value": "redacted"
+  },
+  "ip_address": {
+    "sensitive": false,
+    "type": "string",
+    "value": "198.51.100.69"
+  },
+  "ip_address_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "{deployment_name}-{env}"
   }
 }
