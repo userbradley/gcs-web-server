@@ -12,7 +12,6 @@ resource "google_secret_manager_secret" "iap_client_id" {
   }
 
   labels = {
-    team      = "devops"
     system    = var.deployment_name
     env       = var.env
     namespace = local.deployment_name
@@ -41,7 +40,6 @@ resource "google_secret_manager_secret" "iap_client_secret" {
   }
 
   labels = {
-    team      = "devops"
     system    = var.deployment_name
     env       = var.env
     namespace = local.deployment_name
