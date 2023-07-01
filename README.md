@@ -5,7 +5,7 @@ This is the helm repo for [gcs-web-server](https://github.com/userbradley/gcs-we
 Or maybe not behind IAP, up to you!
 
 ```shell
-helm repo add gcs-web-server https://userbradley.github.io/gcs-web-server
+helm repo add gcs-web-server https://gcs-web-server.breadnet.co.uk
 helm repo search gcs-web-server
 ```
 
