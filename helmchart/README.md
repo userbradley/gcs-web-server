@@ -14,12 +14,6 @@ Google Cloud Storage Webserver on GKE
 | ---- | ------ | --- |
 | Bradley Stannard | <opensource@breadnet.co.uk> | <https://breadnet.co.uk> |
 
-## Generate Helm chart to Upload
-
-```bash
-task package
-```
-
  ## Values
 
 | Key | Type | Default | Description |
