@@ -6,6 +6,6 @@ resource "google_compute_global_address" "ip" {
     environment = var.env
     system      = "gke"
     deployment  = var.deployment_name
-    namespace   = var.deployment_name
+    namespace   = local.deployment_name
   }
 }
