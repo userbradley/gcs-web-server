@@ -31,13 +31,13 @@
 
 # Testing
 
-Use the task file in the `test` directory to test the module
+The testing suit is still being developed
 
 # Module Owners
 
 | Name             | Email                                                                                                                                                                                                             |
 |------------------|-----------------------------------------------------------------|
-| Bradley Stannard | [bradley@breadnet.co.uk](mailto:bradley@breadnet.co.uk) |
+| Bradley Stannard | [opensource@breadnet.co.uk](mailto:opensource@breadnet.co.uk?subject=gcs-web-server&body=Hi%20Bradley%2C%0D%0A%0D%0AI%20got%20your%20email%20address%20from%20the%20gcs-web-server%20repository%20on%20github.%0D%0A%0D%0A%3C!--%20Insert%20your%20email%20here%20--%3E%0D%0A%0D%0A%0D%0A%3C!--%20Dont%20forget%20to%20sign%20off%20with%20your%20name%20--%3E) |
 
 ---
 
