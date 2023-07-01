@@ -25,13 +25,21 @@ See the [Full example repository]() where minimal input is required from your se
 ## What you need pre-existing
 
 * GKE Cluster with Workload Identity enabled
+* GKE Project with IAP Oauth Consent screen created
 * _service project_ where the buckets and service accounts can be created
+* Secrets project
 
 These requirements will be explained in detail below
 
 ### GKE Cluster
 
 See [Allow Pods to authenticate to Google CLoud APIs using Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity) on how to enable Workload Identity on your cluster
+
+### GKE Project with Oauth Consent Screen
+
+This is required for IAP
+
+Navigate to [**APIs & Services** > **OAuth consent screen**](https://console.cloud.google.com/apis/credentials/consent)
 
 ### Service project
 
@@ -50,6 +58,14 @@ You should create the project in the format of:
 ```
 
 Do not prepend `{env}` to this, as the Module will create buckets and service accounts for all environments (if you chose to create multiple) in the same project
+
+
+### Secrets project
+
+A secrets project is required as the module creates secrets with the IAP oauth credentials (If enabled)
+
+You can set this to any project that has the `secrets` api enabled
+
 
 
 ## Useful information
