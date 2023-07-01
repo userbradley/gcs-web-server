@@ -2,11 +2,11 @@ apiVersion: v2
 name: gcs-web-server
 description: Google Cloud Storage Webserver on GKE
 type: application
-version: 0.0.1
+version: 0.0.2
 appVersion: "latest"
 home: https://github.com/userbradley/gcs-web-server
 maintainers:
   - name: Bradley Stannard
     email: opensource@breadnet.co.uk
     url: https://breadnet.co.uk
-    # test
+

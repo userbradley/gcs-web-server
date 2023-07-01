@@ -16,6 +16,8 @@ content: |-
   {{ .Outputs }}
   
   
+  {{.Resources}}
+  
   ---
   
   # Testing

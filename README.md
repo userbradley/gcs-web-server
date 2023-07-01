@@ -20,9 +20,44 @@
 
 Opinionated infrastructure and supporting materials to host a website from a GCS Bucket on GKE
 
+## Why?
+
+GCP does not allow us to put IAP on a backend bucket, and I run several GKE clusters so this seems like a pretty simple solution
+
+
+
 ## Quick start
 
-See the [Full example repository]() where minimal input is required from your self
+See the [Full example repository](https://github.com/userbradley/gcs-web-server-example) where minimal input is required from your self
+to get up and running
+
+Any issues, check the [Troubleshooting Page](troubleshooting.md)
+
+## What is required
+
+* Terraform installed locally
+* Helm installed locally
+
+## Terraform specifics
+
+### What terraform resources are created
+
+See the [Resources](terraform/README.md#resources) section
+
+**Q:** Why are we creating a secret?
+
+**A:** The secrets are created so that if you need to allow other team members to upgrade the helm chart, they are able to pull
+the secrets from your central secret manager
+
+### Helm specifics
+
+You will need to create a DNS record pointing to the IP address created by the module.
+
+**Q:** What values can I set in the helm chart?
+
+**A:** see [helmcharts/gcs-web-server/values.yaml](helmcharts/gcs-web-server/values.yaml)
+
+
 
 ## What you need pre-existing
 
@@ -69,11 +104,11 @@ A secrets project is required as the module creates secrets with the IAP oauth c
 You can set this to any project that has the `secrets` api enabled
 
 
-## Useful information
+## Useful information about the container
 
 ### Where the content should go
 
-Upload what ever static site you want in to the root of the bucket.
+Upload what ever static site you want in to the root of the bucket. It will render `html`, `css` and `javascript`
 
 All pages will get rendered when you hit the link.
 
@@ -114,3 +149,31 @@ Currently not supported. If this is required please open an issue.
 
 * [GitHub Container Registry](https://github.com/userbradley/gcs-web-server/pkgs/container/gcs-web-server)
 * [Google Artifact Registry](https://console.cloud.google.com/artifacts/docker/breadnet-container-store/europe-west2/public/gcs-web-server)
+
+## FAQ
+
+### What CLI tools do I need installed
+
+* Helm
+* Terraform
+
+Optionally: `skaffold`
+
+###  Why do you create a secret
+
+A secret is created by default (eg: you cant turn it off) so that if other members of the team need access to upgrade the helm chart,
+they have the secrets locally.
+
+[See how to print latest secret](https://documentation.breadnet.co.uk/cloud/gcp/print-secret-gcloud/)
+
+
+### How do I create Multiple environments?
+
+To create multiple environments, simply copy and paste the entire module, and change the `env` to one of `dev`, `test`, or `prod`
+
+### Why only `dev` test and `prod`
+
+Limitation in the helm chart that I have not fixed yet
+
+[Open GitHub issue](https://github.com/userbradley/gcs-web-server/issues/6)
+

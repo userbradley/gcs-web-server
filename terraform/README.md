@@ -12,7 +12,6 @@
 | <a name="input_env"></a> [env](#input\_env) | Name of the Environment | `string` | n/a | yes |
 | <a name="input_gke_project"></a> [gke\_project](#input\_gke\_project) | Name of the GCP project | `string` | n/a | yes |
 | <a name="input_iap_enabled"></a> [iap\_enabled](#input\_iap\_enabled) | Should IAP Credentials be generated | `bool` | n/a | yes |
-| <a name="input_namespace"></a> [namespace](#input\_namespace) | Name of the GKE Namespace this will be deployed in to | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | Name of the Region to deploy the resources in to | `string` | `"europe-west2"` | no |
 | <a name="input_secret_project"></a> [secret\_project](#input\_secret\_project) | Name of the Secrets project to use | `string` | n/a | yes |
 | <a name="input_service_project"></a> [service\_project](#input\_service\_project) | Name of the service project | `string` | n/a | yes |
@@ -28,6 +27,23 @@
 | <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | IP address of the IP Address | `"198.51.100.69"` | no |
 | <a name="output_ip_address_name"></a> [ip\_address\_name](#output\_ip\_address\_name) | Name of the IP Address | `"{deployment_name}-{env}"` | no |
 
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [google-beta_google_compute_global_address.ip](https://registry.terraform.io/providers/hashicorp/google-beta/latest/docs/resources/google_compute_global_address) | resource |
+| [google_iap_client.iap_client](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/iap_client) | resource |
+| [google_project_iam_member.roles-dev](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.workload_identity-role-dev](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
+| [google_secret_manager_secret.iap_client_id](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
+| [google_secret_manager_secret.iap_client_secret](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
+| [google_secret_manager_secret_version.iap_client_id](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
+| [google_secret_manager_secret_version.iap_client_secret](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
+| [google_service_account.service_account](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
+| [google_storage_bucket.bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
+| [google_storage_bucket_iam_member.member](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_iam_member) | resource |
+| [google_project.project](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/project) | data source |
 
 ---
 

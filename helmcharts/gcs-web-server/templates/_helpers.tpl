@@ -48,7 +48,7 @@ app.kubernetes.io/tier: webserver
 {{- printf "%s.%s" .Values.env .Values.ingress.domain }}
 {{- end }}
 
-{{- if eq .Values.env "prd"  }}
+{{- if eq .Values.env "prod"  }}
 {{- printf "%s" .Values.ingress.domain }}
 {{- end }}
 
