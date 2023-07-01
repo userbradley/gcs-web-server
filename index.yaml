@@ -3,6 +3,21 @@ entries:
   gcs-web-server:
   - apiVersion: v2
     appVersion: latest
+    created: "2023-07-01T16:58:30.269711288Z"
+    description: Google Cloud Storage Webserver on GKE
+    digest: 7156a9d2cdc4b950eee715b0f21ca617e307e29e4b3e4ab11827bb5a6d6936de
+    home: https://github.com/userbradley/gcs-web-server
+    maintainers:
+    - email: opensource@breadnet.co.uk
+      name: Bradley Stannard
+      url: https://breadnet.co.uk
+    name: gcs-web-server
+    type: application
+    urls:
+    - https://github.com/userbradley/gcs-web-server/releases/download/gcs-web-server-0.0.2/gcs-web-server-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: latest
     created: "2023-07-01T14:34:33.459450258Z"
     description: Google Cloud Storage Webserver on GKE
     digest: 1590ed0f6d666341feb310275742f910503d7bcf04ae1bbe7d7f952d55e3c963
@@ -16,4 +31,4 @@ entries:
     urls:
     - https://github.com/userbradley/gcs-web-server/releases/download/gcs-web-server-0.0.1/gcs-web-server-0.0.1.tgz
     version: 0.0.1
-generated: "2023-07-01T14:34:33.459457359Z"
+generated: "2023-07-01T16:58:30.269722088Z"
