@@ -58,8 +58,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          context: ${{ env.DIR }}
-          file: ${{ env.DIR }}/Dockerfile
+          context: container
+          file: container/Dockerfile
           tags: |
             ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.sha.outputs.sha}}
             ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}
