@@ -27,8 +27,7 @@ jobs:
       packages: write
 
     steps:
-      - id: step1
-        run: echo "image=${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}}" >> $GITHUB_OUTPUT
+
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -62,6 +61,9 @@ jobs:
         id: bnml
         run: echo ref=$(echo ${GITHUB_REF_NAME} | cut -f2 -d'/') >> $GITHUB_OUTPUT
 
+      - id: step1
+        run: echo image=${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}} >> $GITHUB_OUTPUT
+
       - name: Build and Push image
         uses: docker/build-push-action@v4
         with:
@@ -79,13 +81,14 @@ jobs:
             ghcr.io/userbradley/${{ env.CONTAINER}}:latest
 
   scan:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       security-events: write
 
     steps:
       - name: echo
-        run: echo ${{ needs.build.outputs.output1 }}
+        run: echo "${{ needs.build.outputs.output1 }}"
 
 
 
