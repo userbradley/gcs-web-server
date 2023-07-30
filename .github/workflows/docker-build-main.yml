@@ -11,12 +11,15 @@ on:
   push:
     branches:
       - main
+      - feature/container-scanning
     paths:
       - container/**
       - .github/workflows/docker-build-main.yml
 
 jobs:
-  docker:
+  build:
+    outputs:
+      image: ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -72,3 +75,15 @@ jobs:
             ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}
             ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}}
             ghcr.io/userbradley/${{ env.CONTAINER}}:latest
+
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+
+    steps:
+      - name: echo
+        run: echo ${{ needs.build.outputs.image }}
+
+
+
