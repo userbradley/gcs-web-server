@@ -11,7 +11,6 @@ on:
   push:
     branches:
       - main
-      - feature/container-scanning
     paths:
       - container/**
       - .github/workflows/docker-build-main.yml
@@ -110,8 +109,3 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
-#      - name: echo
-#        run: echo "${{ needs.build.outputs.image }}"
-
-
-
