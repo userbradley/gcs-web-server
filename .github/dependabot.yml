@@ -8,3 +8,7 @@ updates:
     directory: "/container"
     schedule:
       interval: "daily"
+  - package-ecosystem: "golang"
+    directory: "/"
+    schedule:
+      interval: "daily"

@@ -2,7 +2,7 @@ FROM golang:1.20.6-alpine3.18 AS gcsfuse
 RUN apk add --no-cache git
 ENV GOPATH="/go"
 ENV GO111MODULE="auto"
-RUN go install github.com/googlecloudplatform/gcsfuse@master
+RUN go install github.com/googlecloudplatform/gcsfuse@v1.0.0
 
 FROM nginx:stable-alpine3.17-slim
 
