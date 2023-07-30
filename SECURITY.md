@@ -3,6 +3,7 @@
 ## Supported Versions
 
 | Version              | Supported          |
+| -------------------- | ------------------ |
 | branch: main         | :white_check_mark: |
 | Docker Image: latest | :white_check_mark: |
 
