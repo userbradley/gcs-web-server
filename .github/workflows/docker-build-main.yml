@@ -64,27 +64,28 @@ jobs:
       - id: output
         run: echo image=${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}} >> $GITHUB_OUTPUT
 
-#      - name: Build and Push image
-#        uses: docker/build-push-action@v4
-#        with:
-#          push: true
-#          context: container
-#          file: container/Dockerfile
-#          tags: |
-#            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.sha.outputs.sha}}
-#            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}
-#            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}}
-#            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:latest
-#            ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.sha.outputs.sha}}
-#            ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}
-#            ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}}
-#            ghcr.io/userbradley/${{ env.CONTAINER}}:latest
+      - name: Build and Push image
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          context: container
+          file: container/Dockerfile
+          tags: |
+            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.sha.outputs.sha}}
+            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}
+            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}}
+            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:latest
+            ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.sha.outputs.sha}}
+            ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}
+            ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}}
+            ghcr.io/userbradley/${{ env.CONTAINER}}:latest
 
   scan:
     needs: build
     runs-on: ubuntu-latest
     permissions:
       security-events: write
+      id-token: write
 
     steps:
       - id: 'auth'
