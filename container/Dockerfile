@@ -1,4 +1,4 @@
-FROM golang:1.20.6-alpine3.18 AS gcsfuse
+FROM golang:1.20.7-alpine3.18 AS gcsfuse
 RUN apk add --no-cache git
 ENV GOPATH="/go"
 ENV GO111MODULE="auto"
