@@ -35,7 +35,7 @@ jobs:
           workload_identity_provider: ${{vars.WORKLOAD_IDENTITY_PROVIDER}}
           service_account: ${{vars.SERVICE_ACCOUNT}}
 
-      - uses: 'docker/login-action@v2'
+      - uses: 'docker/login-action@v3'
         name: Log docker in to Google Container Store
         with:
           registry: 'europe-west2-docker.pkg.dev'
@@ -43,7 +43,7 @@ jobs:
           password: '${{ steps.auth.outputs.access_token }}'
 
       - name: 'Login to GitHub Container Registry'
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: 'ghcr.io'
           username: '${{github.actor}}'
