@@ -64,7 +64,7 @@ jobs:
         run: echo image=${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}} >> $GITHUB_OUTPUT
 
       - name: Build and Push image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           push: true
           context: container
