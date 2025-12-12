@@ -20,7 +20,7 @@ spec:
       serviceAccountName: {{ include "gcs-web-server.name" . }}
       containers:
         - name: {{ include "gcs-web-server.name" .}}
-          image: "europe-west2-docker.pkg.dev/breadnet-container-store/public/gcs-web-server:{{.Values.image.tag}}"
+          image: "ghcr.io/userbradley/gcs-web-server:{{.Values.image.tag}}"
           imagePullPolicy: {{.Values.image.pullPolicy}}
           ports:
             - containerPort: {{.Values.application.listenPort}}
