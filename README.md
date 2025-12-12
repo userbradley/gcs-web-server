@@ -1,5 +1,10 @@
 # GCS Web server
 
+> [!CAUTION]
+> No longer maintained
+> 
+> This repo is no longer maintained on an active basis. I will however respond to issues and feature requests, but as far as I am concerned this repo is feature complete.
+
 <!-- TOC -->
 * [GCS Web server](#gcs-web-server)
   * [Quick start](#quick-start)

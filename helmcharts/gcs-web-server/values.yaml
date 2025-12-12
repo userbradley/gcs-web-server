@@ -13,7 +13,7 @@ scaling:
   replicas: 3
 
 image:
-  # -- Tag of the image to pull from [breadNET Public Google Artifact Registry](https://console.cloud.google.com/artifacts/docker/breadnet-container-store/europe-west2/public/gcs-web-server)
+  # -- Tag of the image to pull from the Github Container Registry
   tag: "4946052"
   # -- Pull policy. Should be left as `Always`
   pullPolicy: Always

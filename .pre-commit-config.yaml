@@ -1,0 +1,42 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: end-of-file-fixer
+        name: Ensure files have end of file
+      - id: trailing-whitespace
+        name: Trims extra whitespaces
+      - id: check-toml
+        name: Checks TOML files
+        #      - id: pretty-format-json
+        #        name: Format Renovate config
+        #        files: renovate.json
+        #      - id: no-commit-to-branch
+        #        name: Ensure commits are only made to feature branches
+        #        args: ['-b', 'main']
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.20.0
+    hooks:
+      - id: yamlfmt
+        name: Yaml Formatting
+        entry: yamlfmt
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.104.0
+    hooks:
+      - id: terraform_fmt
+        name: Terraform FMT
+      - id: terragrunt_fmt
+        name: Terragrunt FMT
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.35.0
+    hooks:
+      - id: check-github-actions
+        name: GitHub actions check
+      - id: check-jsonschema
+        name: Validate Renovate.json
+        files: renovate.json
+        args: ["--schemafile", "https://docs.renovatebot.com/renovate-schema.json"]
+      - id: check-jsonschema
+        name: Ensure Release please
+        files: release-please-config.json
+        args: ["--schemafile", "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"]

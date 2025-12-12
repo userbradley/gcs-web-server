@@ -2,10 +2,6 @@ name: Build Image for GCP
 
 env:
   CONTAINER: "gcs-web-server"
-  REPO: "public"
-
-  ## VARS you won't have to change
-  AR: "europe-west2-docker.pkg.dev/breadnet-container-store"
 
 on:
   push:
@@ -30,21 +26,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v1'
-        with:
-          token_format: 'access_token'
-          workload_identity_provider: ${{vars.WORKLOAD_IDENTITY_PROVIDER}}
-          service_account: ${{vars.SERVICE_ACCOUNT}}
-
-      - uses: 'docker/login-action@v3'
-        name: Log docker in to Google Container Store
-        with:
-          registry: 'europe-west2-docker.pkg.dev'
-          username: 'oauth2accesstoken'
-          password: '${{ steps.auth.outputs.access_token }}'
-
       - name: 'Login to GitHub Container Registry'
         uses: docker/login-action@v3
         with:
@@ -61,7 +42,7 @@ jobs:
         run: echo ref=$(echo ${GITHUB_REF_NAME} | cut -f2 -d'/') >> $GITHUB_OUTPUT
 
       - id: output
-        run: echo image=${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}} >> $GITHUB_OUTPUT
+        run: echo image=ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}} >> $GITHUB_OUTPUT
 
       - name: Build and Push image
         uses: docker/build-push-action@v5
@@ -70,10 +51,6 @@ jobs:
           context: container
           file: container/Dockerfile
           tags: |
-            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.sha.outputs.sha}}
-            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}
-            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}}
-            ${{ env.AR }}/${{ env.REPO }}/${{ env.CONTAINER}}:latest
             ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.sha.outputs.sha}}
             ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}
             ghcr.io/userbradley/${{ env.CONTAINER}}:${{steps.bnml.outputs.ref}}-${{steps.sha.outputs.sha}}
@@ -90,13 +67,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v1'
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v3
         with:
-          token_format: 'access_token'
-          workload_identity_provider: ${{vars.WORKLOAD_IDENTITY_PROVIDER}}
-          service_account: ${{vars.SERVICE_ACCOUNT}}
+          registry: 'ghcr.io'
+          username: '${{github.actor}}'
+          password: '${{secrets.GITHUB_TOKEN}}'
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
